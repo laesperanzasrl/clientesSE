@@ -7,643 +7,9 @@
     <title>Registro de Clientes — Super Europa</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap"
-        rel="stylesheet" />
-    <style>
-        /* ── VARIABLES ──────────────────────────────────────── */
-        :root {
-            --red: #C8102E;
-            --red-dark: #9B0B22;
-            --red-light: #f5e6e8;
-            --yellow: #FFD100;
-            --yellow-dk: #e6bc00;
-            --white: #FFFFFF;
-            --off-white: #FFF9F0;
-            --gray-100: #F4F4F5;
-            --gray-200: #E4E4E7;
-            --gray-400: #A1A1AA;
-            --gray-600: #52525B;
-            --gray-800: #27272A;
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, .08);
-            --shadow-md: 0 6px 24px rgba(0, 0, 0, .12);
-            --shadow-lg: 0 16px 48px rgba(0, 0, 0, .18);
-            --radius: 16px;
-            --radius-sm: 10px;
-        }
-
-        /* ── RESET & BASE ───────────────────────────────────── */
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Nunito', sans-serif;
-            background: var(--off-white);
-            color: var(--gray-800);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* ── BACKGROUND PATTERN ─────────────────────────────── */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image:
-                radial-gradient(circle at 15% 10%, rgba(200, 16, 46, .06) 0%, transparent 40%),
-                radial-gradient(circle at 85% 80%, rgba(255, 209, 0, .10) 0%, transparent 40%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* ── HEADER ─────────────────────────────────────────── */
-        .header {
-            background: var(--red);
-            padding: 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 32px;
-            background: var(--off-white);
-            clip-path: ellipse(55% 100% at 50% 100%);
-        }
-
-        .header-inner {
-            max-width: 780px;
-            margin: 0 auto;
-            padding: 36px 24px 52px;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .logo-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--yellow);
-            color: var(--red-dark);
-            padding: 8px 20px;
-            border-radius: 100px;
-            font-weight: 900;
-            font-size: .82rem;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            margin-bottom: 18px;
-        }
-
-        .logo-badge svg {
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-        }
-
-        .header-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(2.8rem, 7vw, 4.2rem);
-            color: var(--white);
-            line-height: 1;
-            letter-spacing: .02em;
-            margin-bottom: 10px;
-        }
-
-        .header-title span {
-            color: var(--yellow);
-        }
-
-        .header-sub {
-            color: rgba(255, 255, 255, .82);
-            font-size: 1rem;
-            font-weight: 600;
-            max-width: 440px;
-            margin: 0 auto;
-            line-height: 1.5;
-        }
-
-        /* ── MAIN WRAPPER ───────────────────────────────────── */
-        .wrapper {
-            position: relative;
-            z-index: 1;
-            max-width: 780px;
-            margin: 0 auto;
-            padding: 40px 16px 80px;
-        }
-
-        /* ── CARDS ──────────────────────────────────────────── */
-        .card {
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-sm);
-            padding: 32px 28px;
-            margin-bottom: 20px;
-            border: 1.5px solid var(--gray-200);
-            transition: box-shadow .2s ease;
-        }
-
-        .card:hover {
-            box-shadow: var(--shadow-md);
-        }
-
-        .card-title {
-            font-size: .72rem;
-            font-weight: 800;
-            letter-spacing: .12em;
-            text-transform: uppercase;
-            color: var(--red);
-            margin-bottom: 22px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .card-title::before {
-            content: '';
-            display: block;
-            width: 4px;
-            height: 18px;
-            background: var(--yellow);
-            border-radius: 2px;
-            flex-shrink: 0;
-        }
-
-        /* ── FORM GRID ──────────────────────────────────────── */
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .form-grid .full {
-            grid-column: 1 / -1;
-        }
-
-        @media (max-width: 560px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-grid .full {
-                grid-column: 1;
-            }
-
-            .card {
-                padding: 24px 18px;
-            }
-        }
-
-        /* ── FIELD ──────────────────────────────────────────── */
-        .field {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .field label {
-            font-size: .84rem;
-            font-weight: 700;
-            color: var(--gray-600);
-        }
-
-        .field label .opt {
-            font-weight: 600;
-            color: var(--gray-400);
-            font-size: .78rem;
-        }
-
-        .field label .req {
-            color: var(--red);
-            margin-left: 2px;
-        }
-
-        .field input,
-        .field textarea {
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-sm);
-            padding: 12px 14px;
-            font-family: 'Nunito', sans-serif;
-            font-size: .95rem;
-            font-weight: 600;
-            color: var(--gray-800);
-            background: var(--gray-100);
-            outline: none;
-            transition: border-color .18s, background .18s, box-shadow .18s;
-            width: 100%;
-        }
-
-        .field input::placeholder,
-        .field textarea::placeholder {
-            color: var(--gray-400);
-            font-weight: 500;
-        }
-
-        .field input:focus,
-        .field textarea:focus {
-            border-color: var(--red);
-            background: var(--white);
-            box-shadow: 0 0 0 4px rgba(200, 16, 46, .08);
-        }
-
-        .field input.error {
-            border-color: var(--red);
-            background: var(--red-light);
-        }
-
-        .field textarea {
-            resize: vertical;
-            min-height: 90px;
-        }
-
-        /* ── CHECKBOX GROUP ─────────────────────────────────── */
-        .q-label {
-            font-size: .96rem;
-            font-weight: 800;
-            color: var(--gray-800);
-            margin-bottom: 14px;
-            line-height: 1.35;
-        }
-
-        .q-label .req {
-            color: var(--red);
-        }
-
-        .check-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        @media (max-width: 480px) {
-            .check-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .check-item {
-            position: relative;
-        }
-
-        .check-item input[type="checkbox"] {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .check-item label {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            padding: 11px 14px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-size: .88rem;
-            font-weight: 700;
-            color: var(--gray-600);
-            background: var(--gray-100);
-            transition: border-color .15s, background .15s, color .15s, transform .1s;
-            line-height: 1.3;
-            user-select: none;
-        }
-
-        .check-item label::before {
-            content: '';
-            flex-shrink: 0;
-            width: 18px;
-            height: 18px;
-            border: 2px solid var(--gray-400);
-            border-radius: 5px;
-            background: var(--white);
-            margin-top: 1px;
-            transition: border-color .15s, background .15s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .check-item input:checked+label {
-            border-color: var(--red);
-            background: var(--red-light);
-            color: var(--red-dark);
-        }
-
-        .check-item input:checked+label::before {
-            background: var(--red);
-            border-color: var(--red);
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpolyline points='1,5 4,8.5 11,1' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-            background-size: 10px 9px;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-
-        .check-item label:hover {
-            border-color: var(--gray-400);
-            transform: translateY(-1px);
-        }
-
-        .check-item input:checked+label:hover {
-            border-color: var(--red-dark);
-        }
-
-        /* ── SUBMIT BUTTON ──────────────────────────────────── */
-        .submit-wrap {
-            text-align: center;
-            margin-top: 8px;
-        }
-
-        .btn-submit {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: var(--red);
-            color: var(--white);
-            border: none;
-            border-radius: 100px;
-            padding: 18px 52px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.4rem;
-            letter-spacing: .06em;
-            cursor: pointer;
-            transition: background .18s, transform .15s, box-shadow .15s;
-            box-shadow: 0 6px 24px rgba(200, 16, 46, .35);
-        }
-
-        .btn-submit:hover:not(:disabled) {
-            background: var(--red-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 32px rgba(200, 16, 46, .45);
-        }
-
-        .btn-submit:active:not(:disabled) {
-            transform: translateY(0);
-        }
-
-        .btn-submit:disabled {
-            cursor: not-allowed;
-            opacity: .75;
-        }
-
-        /* ── OVERLAY + SPINNER ──────────────────────────────── */
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 10, 8, .65);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            z-index: 900;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity .25s ease;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .spinner-box {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 40px 48px;
-            text-align: center;
-            box-shadow: var(--shadow-lg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .spinner {
-            width: 52px;
-            height: 52px;
-            border: 5px solid var(--gray-200);
-            border-top-color: var(--red);
-            border-radius: 50%;
-            animation: spin .75s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .spinner-text {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--gray-600);
-        }
-
-        /* ── MODAL ──────────────────────────────────────────── */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 10, 8, .65);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity .25s ease;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .modal {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 36px 32px;
-            max-width: 440px;
-            width: 100%;
-            text-align: center;
-            box-shadow: var(--shadow-lg);
-            transform: scale(.92) translateY(12px);
-            transition: transform .28s cubic-bezier(.34, 1.56, .64, 1);
-            position: relative;
-        }
-
-        .modal-overlay.active .modal {
-            transform: scale(1) translateY(0);
-        }
-
-        .modal-icon {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 2rem;
-        }
-
-        .modal-icon.success {
-            background: #dcfce7;
-        }
-
-        .modal-icon.error {
-            background: var(--red-light);
-        }
-
-        .modal-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.9rem;
-            letter-spacing: .04em;
-            margin-bottom: 10px;
-            color: var(--gray-800);
-        }
-
-        .modal-title.success {
-            color: #16a34a;
-        }
-
-        .modal-title.error {
-            color: var(--red);
-        }
-
-        .modal-msg {
-            font-size: .95rem;
-            font-weight: 600;
-            color: var(--gray-600);
-            line-height: 1.5;
-            margin-bottom: 26px;
-        }
-
-        .modal-errors {
-            text-align: left;
-            background: var(--red-light);
-            border-radius: var(--radius-sm);
-            padding: 14px 16px;
-            margin-bottom: 22px;
-        }
-
-        .modal-errors li {
-            font-size: .88rem;
-            font-weight: 700;
-            color: var(--red-dark);
-            padding: 3px 0;
-            list-style: none;
-            display: flex;
-            align-items: flex-start;
-            gap: 7px;
-        }
-
-        .modal-errors li::before {
-            content: '✕';
-            flex-shrink: 0;
-        }
-
-        .btn-modal {
-            display: inline-block;
-            padding: 13px 40px;
-            border-radius: 100px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.2rem;
-            letter-spacing: .06em;
-            cursor: pointer;
-            border: none;
-            transition: background .15s, transform .12s;
-        }
-
-        .btn-modal.success {
-            background: #16a34a;
-            color: var(--white);
-            box-shadow: 0 4px 18px rgba(22, 163, 74, .3);
-        }
-
-        .btn-modal.success:hover {
-            background: #15803d;
-            transform: translateY(-1px);
-        }
-
-        .btn-modal.error {
-            background: var(--red);
-            color: var(--white);
-            box-shadow: 0 4px 18px rgba(200, 16, 46, .3);
-        }
-
-        .btn-modal.error:hover {
-            background: var(--red-dark);
-            transform: translateY(-1px);
-        }
-
-        /* ── FOOTER ─────────────────────────────────────────── */
-        .footer {
-            text-align: center;
-            padding: 0 16px 40px;
-            font-size: .78rem;
-            color: var(--gray-400);
-            font-weight: 600;
-        }
-
-        .footer strong {
-            color: var(--red);
-        }
-
-        /* ── ENTRANCE ANIMATIONS ────────────────────────────── */
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(22px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .header-inner {
-            animation: fadeUp .5s ease both;
-        }
-
-        .card:nth-child(1) {
-            animation: fadeUp .45s .1s ease both;
-        }
-
-        .card:nth-child(2) {
-            animation: fadeUp .45s .18s ease both;
-        }
-
-        .card:nth-child(3) {
-            animation: fadeUp .45s .26s ease both;
-        }
-
-        .card:nth-child(4) {
-            animation: fadeUp .45s .34s ease both;
-        }
-
-        .card:nth-child(5) {
-            animation: fadeUp .45s .42s ease both;
-        }
-
-        .submit-wrap {
-            animation: fadeUp .45s .50s ease both;
-        }
-    </style>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/index.css" />
 </head>
 
 <body>
@@ -652,8 +18,8 @@
     <header class="header">
         <div class="header-inner">
             <div class="logo-badge">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                    stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
                     <line x1="3" y1="6" x2="21" y2="6" />
                     <path d="M16 10a4 4 0 0 1-8 0" />
@@ -676,17 +42,19 @@
                 <div class="form-grid">
                     <div class="field full">
                         <label for="nombre">Nombre y Apellido <span class="req">*</span></label>
-                        <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan García"
-                            autocomplete="name" />
+                        <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan García" autocomplete="name" />
                     </div>
                     <div class="field">
                         <label for="dni">DNI <span class="req">*</span></label>
-                        <input type="text" id="dni" name="dni" placeholder="Sin puntos: 32456789" maxlength="9"
-                            inputmode="numeric" />
+                        <input type="text" id="dni" name="dni" placeholder="Sin puntos: 32456789" maxlength="9" inputmode="numeric" />
                     </div>
                     <div class="field">
                         <label for="celular">Número de celular <span class="req">*</span></label>
                         <input type="text" id="celular" name="celular" placeholder="Ej: 2657314713" inputmode="tel" />
+                    </div>
+                    <div class="field">
+                        <label for="fechaNac">Fecha de cumpleaños <span class="req">*</span></label>
+                        <input type="date" id="fechaNac" name="fechaNac" />
                     </div>
                     <div class="field full">
                         <label for="domicilio">Domicilio <span class="opt">(opcional)</span></label>
@@ -700,24 +68,42 @@
             <div class="card">
                 <p class="q-label">¿Por qué elegís comprar en nuestro supermercado? <span class="req">*</span></p>
                 <div class="check-grid">
-                    <div class="check-item"><input type="checkbox" id="p1_1" name="p1" value="Buenos precios"><label
-                            for="p1_1">Buenos precios</label></div>
-                    <div class="check-item"><input type="checkbox" id="p1_2" name="p1"
-                            value="Cercanía / ubicación"><label for="p1_2">Cercanía / ubicación</label></div>
-                    <div class="check-item"><input type="checkbox" id="p1_3" name="p1"
-                            value="Gran variedad de productos"><label for="p1_3">Gran variedad de productos</label>
+                    <div class="check-item">
+                        <input type="checkbox" id="p1_1" name="p1" value="Buenos precios">
+                        <label for="p1_1">Buenos precios</label>
                     </div>
-                    <div class="check-item"><input type="checkbox" id="p1_4" name="p1"
-                            value="Buena atención al cliente"><label for="p1_4">Buena atención al cliente</label></div>
-                    <div class="check-item"><input type="checkbox" id="p1_5" name="p1"
-                            value="Promociones y descuentos"><label for="p1_5">Promociones y descuentos</label></div>
-                    <div class="check-item"><input type="checkbox" id="p1_6" name="p1"
-                            value="Calidad de los productos"><label for="p1_6">Calidad de los productos</label></div>
-                    <div class="check-item"><input type="checkbox" id="p1_7" name="p1"
-                            value="Rapidez para comprar"><label for="p1_7">Rapidez para comprar</label></div>
-                    <div class="check-item"><input type="checkbox" id="p1_8" name="p1"
-                            value="Costumbre / compro siempre acá"><label for="p1_8">Costumbre / compro siempre
-                            acá</label></div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p1_2" name="p1" value="Cercanía / ubicación">
+                        <label for="p1_2">Cercanía / ubicación</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p1_3" name="p1" value="Gran variedad de productos">
+                        <label for="p1_3">Gran variedad de productos</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p1_4" name="p1" value="Buena atención al cliente">
+                        <label for="p1_4">Buena atención al cliente</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p1_5" name="p1" value="Promociones y descuentos">
+                        <label for="p1_5">Promociones y descuentos</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p1_6" name="p1" value="Calidad de los productos">
+                        <label for="p1_6">Calidad de los productos</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p1_7" name="p1" value="Rapidez para comprar">
+                        <label for="p1_7">Rapidez para comprar</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p1_8" name="p1" value="Costumbre / compro siempre acá">
+                        <label for="p1_8">Costumbre / compro siempre acá</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p1_9" name="p1" value="Compro para mi comercio">
+                        <label for="p1_9">Compro para mi comercio</label>
+                    </div>
                 </div>
             </div>
 
@@ -725,44 +111,110 @@
             <div class="card">
                 <p class="q-label">¿Cómo te enterás de nuestras promociones? <span class="req">*</span></p>
                 <div class="check-grid">
-                    <div class="check-item"><input type="checkbox" id="p2_1" name="p2" value="Instagram"><label
-                            for="p2_1">Instagram</label></div>
-                    <div class="check-item"><input type="checkbox" id="p2_2" name="p2" value="Facebook"><label
-                            for="p2_2">Facebook</label></div>
-                    <div class="check-item"><input type="checkbox" id="p2_3" name="p2" value="WhatsApp"><label
-                            for="p2_3">WhatsApp</label></div>
-                    <div class="check-item"><input type="checkbox" id="p2_4" name="p2"
-                            value="Carteles dentro del local"><label for="p2_4">Carteles dentro del local</label></div>
-                    <div class="check-item"><input type="checkbox" id="p2_5" name="p2"
-                            value="Recomendación de familiares/amigos"><label for="p2_5">Recomendación de
-                            familiares/amigos</label></div>
-                    <div class="check-item"><input type="checkbox" id="p2_6" name="p2"
-                            value="Paso por el local y veo las promociones"><label for="p2_6">Paso por el local y veo
-                            las promociones</label></div>
-                    <div class="check-item"><input type="checkbox" id="p2_7" name="p2"
-                            value="No suelo enterarme de las promociones"><label for="p2_7">No suelo enterarme de las
-                            promociones</label></div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p2_1" name="p2" value="Instagram">
+                        <label for="p2_1">Instagram</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p2_2" name="p2" value="Facebook">
+                        <label for="p2_2">Facebook</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p2_3" name="p2" value="WhatsApp">
+                        <label for="p2_3">WhatsApp</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p2_4" name="p2" value="Carteles dentro del local">
+                        <label for="p2_4">Carteles dentro del local</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p2_5" name="p2" value="Recomendación de familiares/amigos">
+                        <label for="p2_5">Recomendación de familiares/amigos</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p2_6" name="p2" value="Paso por el local y veo las promociones">
+                        <label for="p2_6">Paso por el local y veo las promociones</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p2_7" name="p2" value="No suelo enterarme de las promociones">
+                        <label for="p2_7">No suelo enterarme de las promociones</label>
+                    </div>
                 </div>
             </div>
 
             <!-- PREGUNTA 3 -->
             <div class="card">
-                <p class="q-label">¿Qué te gustaría encontrar más en nuestro supermercado? <span class="req">*</span>
-                </p>
+                <p class="q-label">¿Qué te gustaría encontrar más en nuestro supermercado? <span class="req">*</span></p>
                 <div class="check-grid">
-                    <div class="check-item"><input type="checkbox" id="p3_1" name="p3" value="Más ofertas"><label
-                            for="p3_1">Más ofertas</label></div>
-                    <div class="check-item"><input type="checkbox" id="p3_2" name="p3"
-                            value="Más variedad de productos"><label for="p3_2">Más variedad de productos</label></div>
-                    <div class="check-item"><input type="checkbox" id="p3_3" name="p3"
-                            value="Más productos económicos"><label for="p3_3">Más productos económicos</label></div>
-                    <div class="check-item"><input type="checkbox" id="p3_4" name="p3"
-                            value="Más productos saludables"><label for="p3_4">Más productos saludables</label></div>
-                    <div class="check-item"><input type="checkbox" id="p3_5" name="p3"
-                            value="Más marcas conocidas"><label for="p3_5">Más marcas conocidas</label></div>
-                    <div class="check-item"><input type="checkbox" id="p3_6" name="p3"
-                            value="Más productos locales/regionales"><label for="p3_6">Más productos
-                            locales/regionales</label></div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p3_1" name="p3" value="Más ofertas">
+                        <label for="p3_1">Más ofertas</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p3_2" name="p3" value="Más variedad de productos">
+                        <label for="p3_2">Más variedad de productos</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p3_3" name="p3" value="Más productos económicos">
+                        <label for="p3_3">Más productos económicos</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p3_4" name="p3" value="Más productos saludables">
+                        <label for="p3_4">Más productos saludables</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p3_5" name="p3" value="Más marcas conocidas">
+                        <label for="p3_5">Más marcas conocidas</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p3_6" name="p3" value="Más productos locales/regionales">
+                        <label for="p3_6">Más productos locales/regionales</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p3_7" name="p3" value="Más productos para celíacos">
+                        <label for="p3_7">Más productos para celíacos</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p3_8" name="p3" value="Más productos para diabéticos">
+                        <label for="p3_8">Más productos para diabéticos</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="checkbox" id="p3_9" name="p3" value="Más productos para intolerantes a la lactosa">
+                        <label for="p3_9">Más productos para intolerantes a la lactosa</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PREGUNTA 4 -->
+            <div class="card">
+                <p class="q-label">¿En cuál de nuestras sucursales comprás regularmente? <span class="req">*</span></p>
+                <div class="check-grid">
+                    <div class="check-item">
+                        <input type="radio" id="p4_1" name="p4" value="HIPER">
+                        <label for="p4_1">Sucursal calle Europa</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="radio" id="p4_2" name="p4" value="CENTRO">
+                        <label for="p4_2">Sucursal calle Pedernera</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="radio" id="p4_3" name="p4" value="RIBERA">
+                        <label for="p4_3">Sucursal barrio La Ribera</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="radio" id="p4_4" name="p4" value="MAYORISTA">
+                        <label for="p4_4">Sucursal Mayorista</label>
+                    </div>
+                    <!-- PROMO: nueva sucursal Maipú — no seleccionable -->
+                    <div class="check-item-promo">
+                        <div class="promo-card">
+                            <div class="promo-icon">🏗️</div>
+                            <div class="promo-text">
+                                <strong>Nueva sucursal calle Maipú</strong>
+                                <span>¡Próximamente abrimos en tu zona! Seguinos en redes para enterarte primero.</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -779,8 +231,8 @@
             <!-- SUBMIT -->
             <div class="submit-wrap">
                 <button type="submit" class="btn-submit" id="btnSubmit">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                        stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="20 6 9 17 4 12" />
                     </svg>
                     REGISTRARME AHORA
@@ -813,197 +265,7 @@
         </div>
     </div>
 
-    <script>
-        // ─────────────────────────────────────────────────────────────
-        //  ⚠️  REEMPLAZÁ esta URL con la de tu Apps Script desplegado
-        //  Cómo obtenerla:
-        //   1. Abrí script.google.com → pegá el código .gs
-        //   2. Implementar → Nueva implementación → Aplicación web
-        //   3. Ejecutar como: Yo | Acceso: Cualquier persona
-        //   4. Copiá la URL y pegala aquí abajo
-        // ─────────────────────────────────────────────────────────────
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzYUgu2iKe0q3B7pregt7vdssFR0m1XMHcmNtBYEgeY_enecmIrQucfjbiYNLbgpouW/exec";
-
-        // ─── DOM refs ───────────────────────────────────────────────
-        const form = document.getElementById("clientForm");
-        const btnSubmit = document.getElementById("btnSubmit");
-        const loadingOverlay = document.getElementById("loadingOverlay");
-        const modalOverlay = document.getElementById("modalOverlay");
-        const modalIcon = document.getElementById("modalIcon");
-        const modalTitle = document.getElementById("modalTitle");
-        const modalMsg = document.getElementById("modalMsg");
-        const modalErrors = document.getElementById("modalErrors");
-        const modalBtn = document.getElementById("modalBtn");
-
-        // ─── Helpers ────────────────────────────────────────────────
-        function setLoading(on) {
-            loadingOverlay.classList.toggle("active", on);
-            btnSubmit.disabled = on;
-        }
-
-        function showModal({ type, title, message, errors = [] }) {
-            // icon
-            modalIcon.className = "modal-icon " + type;
-            modalIcon.innerHTML = type === "success"
-                ? "✅"
-                : "❌";
-
-            modalTitle.className = "modal-title " + type;
-            modalTitle.textContent = title;
-            modalMsg.textContent = message;
-
-            if (errors.length) {
-                modalErrors.style.display = "block";
-                modalErrors.innerHTML = errors.map(e => `<li>${e}</li>`).join("");
-            } else {
-                modalErrors.style.display = "none";
-                modalErrors.innerHTML = "";
-            }
-
-            modalBtn.className = "btn-modal " + type;
-            modalBtn.textContent = type === "success" ? "¡Listo!" : "Entendido";
-
-            modalOverlay.classList.add("active");
-        }
-
-        function closeModal() {
-            modalOverlay.classList.remove("active");
-        }
-
-        // ─── Validate ───────────────────────────────────────────────
-        function validate(data) {
-            const errors = [];
-
-            if (!data.nombre.trim())
-                errors.push("El nombre y apellido es obligatorio.");
-
-            if (!data.dni.trim()) {
-                errors.push("El DNI es obligatorio.");
-            } else if (!/^\d{7,8}$/.test(data.dni.trim())) {
-                errors.push("El DNI debe tener entre 7 y 8 dígitos, sin puntos ni espacios.");
-            }
-
-            if (!data.celular.trim()) {
-                errors.push("El número de celular es obligatorio.");
-            } else if (!/^\d{7,15}$/.test(data.celular.trim().replace(/[\s\-+]/g, ""))) {
-                errors.push("El número de celular no es válido.");
-            }
-
-            if (!data.pregunta1.length)
-                errors.push("Seleccioná al menos una opción en la primera pregunta.");
-
-            if (!data.pregunta2.length)
-                errors.push("Seleccioná al menos una opción en la segunda pregunta.");
-
-            if (!data.pregunta3.length)
-                errors.push("Seleccioná al menos una opción en la tercera pregunta.");
-
-            return errors;
-        }
-
-        // ─── Get checked values ──────────────────────────────────────
-        function getChecked(name) {
-            return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
-                .map(cb => cb.value);
-        }
-
-        // ─── Submit ──────────────────────────────────────────────────
-        form.addEventListener("submit", async function (e) {
-            e.preventDefault();
-
-            const data = {
-                nombre: document.getElementById("nombre").value.trim(),
-                dni: document.getElementById("dni").value.trim(),
-                celular: document.getElementById("celular").value.trim(),
-                domicilio: document.getElementById("domicilio").value.trim(),
-                pregunta1: getChecked("p1"),
-                pregunta2: getChecked("p2"),
-                pregunta3: getChecked("p3"),
-                comentarios: document.getElementById("comentarios").value.trim(),
-            };
-
-            // --- Client-side validation ---
-            const errors = validate(data);
-            if (errors.length) {
-                showModal({
-                    type: "error",
-                    title: "Revisá el formulario",
-                    message: "Por favor corregí los siguientes errores antes de enviar:",
-                    errors
-                });
-                return;
-            }
-
-            // --- Check URL configured ---
-            if (APPS_SCRIPT_URL === "PEGAR_URL_AQUI") {
-                showModal({
-                    type: "error",
-                    title: "Configuración pendiente",
-                    message: "El formulario aún no está conectado al servidor. Por favor configurá la URL del Apps Script.",
-                });
-                return;
-            }
-
-            // --- Prepare payload ---
-            const payload = {
-                nombre: data.nombre,
-                dni: data.dni.replace(/\./g, ""),
-                celular: data.celular,
-                domicilio: data.domicilio,
-                pregunta1: data.pregunta1.join(", "),
-                pregunta2: data.pregunta2.join(", "),
-                pregunta3: data.pregunta3.join(", "),
-                comentarios: data.comentarios,
-            };
-
-            // --- Send ---
-            setLoading(true);
-            try {
-                const res = await fetch(APPS_SCRIPT_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "text/plain" },
-                    body: JSON.stringify(payload),
-                });
-
-                const result = await res.json();
-
-                setLoading(false);
-
-                if (result.success) {
-                    showModal({
-                        type: "success",
-                        title: "¡Registro exitoso!",
-                        message: "¡Bienvenido/a a la comunidad Super Europa! Ya sos parte de nuestra familia de clientes.",
-                    });
-                    form.reset();
-                } else if (result.errorType === "DUPLICATE_DNI") {
-                    showModal({
-                        type: "error",
-                        title: "¡Ya sos parte!",
-                        message: "El DNI ingresado ya está registrado. ¡Ya sos parte de la comunidad Super Europa! 🎉",
-                    });
-                } else {
-                    showModal({
-                        type: "error",
-                        title: "Error al registrar",
-                        message: result.message || "Ocurrió un error inesperado. Intentá de nuevo en unos momentos.",
-                    });
-                }
-            } catch (err) {
-                setLoading(false);
-                showModal({
-                    type: "error",
-                    title: "Error de conexión",
-                    message: "No pudimos conectar con el servidor. Verificá tu conexión a internet e intentá de nuevo.",
-                });
-            }
-        });
-
-        // ─── Solo números en DNI ─────────────────────────────────────
-        document.getElementById("dni").addEventListener("input", function () {
-            this.value = this.value.replace(/[^\d]/g, "");
-        });
-    </script>
+    <script src="./js/index.js"></script>
 </body>
 
 </html>
