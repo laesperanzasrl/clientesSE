@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alta de Convenios — Super Europa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="../css/formConvenios.css" /> <!-- Optional layout tweaks -->
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <path d="M16 10a4 4 0 0 1-8 0" />
+                </svg>
+                Gestión en cajas
+            </div>
+            <h1 class="header-title">ALTA DE <span>CONVENIOS</span></h1>
+            <p class="header-sub">Registra los datos del cliente para asociarlo a su descuento corporativo/convenio.</p>
+        </div>
+    </header>
+
+    <!-- FORM -->
+    <div class="wrapper">
+        <form id="clientForm" novalidate>
+
+            <!-- DATOS PERSONALES -->
+            <div class="card">
+                <div class="card-title">Datos del Titular</div>
+                <div class="form-grid">
+                    <div class="field full">
+                        <label for="nombre">Nombre y Apellido <span class="req">*</span></label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan García"
+                            autocomplete="name" />
+                    </div>
+                    <div class="field">
+                        <label for="dni">DNI <span class="req">*</span></label>
+                        <input type="text" id="dni" name="dni" placeholder="Sin puntos: 32456789" maxlength="9"
+                            inputmode="numeric" />
+                    </div>
+                    <div class="field">
+                        <label for="celular">Número de celular <span class="req">*</span></label>
+                        <input type="text" id="celular" name="celular" placeholder="Ej: 2657314713" inputmode="tel" />
+                    </div>
+                    <div class="field">
+                        <label for="fechaNac">Fecha de cumpleaños <span class="req">*</span></label>
+                        <input type="date" id="fechaNac" name="fechaNac" />
+                    </div>
+                    <div class="field full">
+                        <label for="domicilio">Domicilio <span class="opt">(opcional)</span></label>
+                        <input type="text" id="domicilio" name="domicilio"
+                            placeholder="Ej: San Martín 1234, Villa Mercedes" autocomplete="street-address" />
+                    </div>
+                    <!-- CONVENIO DROPDOWN -->
+                    <div class="field full highlight-field">
+                        <label for="convenio">Entidad del Convenio <span class="req">*</span></label>
+                        <select id="convenio" name="convenio" required>
+                            <option value="">Cargando convenios...</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- PREGUNTA 4 (SUCURSAL) -->
+            <div class="card">
+                <p class="q-label">¿En cuál sucursal estás gestionando el alta? <span class="req">*</span></p>
+                <div class="check-grid">
+                    <div class="check-item">
+                        <input type="radio" id="p4_1" name="p4" value="HIPER">
+                        <label for="p4_1">Sucursal calle Europa</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="radio" id="p4_2" name="p4" value="CENTRO">
+                        <label for="p4_2">Sucursal calle Pedernera</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="radio" id="p4_3" name="p4" value="RIBERA">
+                        <label for="p4_3">Sucursal barrio La Ribera</label>
+                    </div>
+                    <div class="check-item">
+                        <input type="radio" id="p4_4" name="p4" value="MAYORISTA">
+                        <label for="p4_4">Sucursal Mayorista</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMENTARIOS -->
+            <div class="card">
+                <div class="card-title">Comentarios o Notas Internas</div>
+                <div class="field">
+                    <label for="comentarios">¿Algo importante que agregar? <span class="opt">(opcional)</span></label>
+                    <textarea id="comentarios" name="comentarios"
+                        placeholder="Escribí acá el área/cargo si aplica, o cualquier nota del alta…"></textarea>
+                </div>
+            </div>
+
+            <!-- SUBMIT -->
+            <div class="submit-wrap">
+                <button type="submit" class="btn-submit" id="btnSubmit">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    ASOCIAR CLIENTE A CONVENIO
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="footer">
+        <strong>Super Europa</strong> &nbsp;·&nbsp; Sistema interno en cajas
+    </div>
+
+    <!-- LOADING OVERLAY -->
+    <div class="overlay" id="loadingOverlay">
+        <div class="spinner-box">
+            <div class="spinner"></div>
+            <p class="spinner-text">Guardando alta corporativa…</p>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modal">
+            <div class="modal-icon" id="modalIcon"></div>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <p class="modal-msg" id="modalMsg"></p>
+            <ul class="modal-errors" id="modalErrors" style="display:none;"></ul>
+            <button class="btn-modal" id="modalBtn" onclick="closeModal()"></button>
+        </div>
+    </div>
+
+    <script src="../js/formConvenios.js"></script>
+</body>
+
+</html>

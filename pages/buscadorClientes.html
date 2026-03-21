@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buscador de Clientes — Super Europa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="../css/buscadorClientes.css" />
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-inner">
+            <h1 class="header-title">BUSCADOR DE <span>CLIENTES</span></h1>
+            <p class="header-sub">Encuentra usuarios por DNI, Nombre o Apellido y revisa sus convenios activos.</p>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <div class="wrapper search-wrapper">
+        <div class="card search-card">
+            <div class="search-bar">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="searchInput" placeholder="Escribe un DNI o un Nombre para buscar..."
+                    autocomplete="off" disabled />
+            </div>
+
+            <div id="loadingState" class="state-box">
+                <div class="spinner"></div>
+                <p>Cargando base de datos de clientes y convenios...</p>
+            </div>
+
+            <div id="errorState" class="state-box" style="display: none;">
+                <p id="errorText">Error al cargar los datos.</p>
+                <button onclick="location.reload()" class="btn-submit"
+                    style="padding: 10px 20px; font-size: 1rem; margin-top: 15px;">Intentar de nuevo</button>
+            </div>
+
+            <div id="emptyState" class="state-box" style="display: none;">
+                <p>No se encontraron clientes que coincidan con la búsqueda.</p>
+            </div>
+
+            <div class="table-responsive" id="tableContainer" style="display: none;">
+                <table class="table-clientes">
+                    <thead>
+                        <tr>
+                            <th width="5%">ID</th>
+                            <th width="20%">Nombre y Apellido</th>
+                            <th width="10%">DNI</th>
+                            <th width="15%">Teléfono</th>
+                            <th width="12%">Nacimiento</th>
+                            <th width="18%">Domicilio</th>
+                            <th width="20%">Convenio / Descuento</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Filled by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/buscadorClientes.js"></script>
+</body>
+
+</html>

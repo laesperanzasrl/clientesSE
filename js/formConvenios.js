@@ -1,5 +1,5 @@
 // ============================================================
-//  SUPER EUROPA — Lógica del formulario de clientes PUBLICO (Sin Convenio)
+//  SUPER EUROPA — Alta de Clientes con Convenio (Uso en Cajas)
 // ============================================================
 
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzYUgu2iKe0q3B7pregt7vdssFR0m1XMHcmNtBYEgeY_enecmIrQucfjbiYNLbgpouW/exec";
@@ -14,6 +14,34 @@ const modalTitle = document.getElementById("modalTitle");
 const modalMsg = document.getElementById("modalMsg");
 const modalErrors = document.getElementById("modalErrors");
 const modalBtn = document.getElementById("modalBtn");
+
+// ─── Cargar Convenios al inicio ───────────────────────────────
+document.addEventListener("DOMContentLoaded", async () => {
+    const selectConvenio = document.getElementById("convenio");
+    if (!selectConvenio) return;
+    try {
+        const response = await fetch(APPS_SCRIPT_URL);
+        const data = await response.json();
+
+        if (data.convenios) {
+            selectConvenio.innerHTML = '<option value="">Selecciona la entidad o comercio</option>';
+            data.convenios.forEach(convenio => {
+                // Removemos la opcion de "No pertenezco" ya que este form es EXCLUSIVO de convenios.
+                if(!["NO PERTENEZCO A NINGUNO", "NINGUNO", "NO", "SIN CONVENIO"].includes(convenio.toUpperCase())) {
+                    const option = document.createElement("option");
+                    option.value = convenio;
+                    option.textContent = convenio;
+                    selectConvenio.appendChild(option);
+                }
+            });
+        } else {
+            selectConvenio.innerHTML = '<option value="">No hay convenios disponibles</option>';
+        }
+    } catch (error) {
+        console.error("Error cargando los convenios:", error);
+        selectConvenio.innerHTML = '<option value="">Error cargando convenios</option>';
+    }
+});
 
 // ─── Helpers ─────────────────────────────────────────────────
 function setLoading(on) {
@@ -38,18 +66,13 @@ function showModal({ type, title, message, errors = [] }) {
     }
 
     modalBtn.className = "btn-modal " + type;
-    modalBtn.textContent = type === "success" ? "¡Listo!" : "Entendido";
+    modalBtn.textContent = type === "success" ? "¡Genial!" : "Entendido";
 
     modalOverlay.classList.add("active");
 }
 
 function closeModal() {
     modalOverlay.classList.remove("active");
-}
-
-function getChecked(name) {
-    return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
-        .map(cb => cb.value);
 }
 
 function getRadio(name) {
@@ -71,22 +94,16 @@ function validate(data) {
     }
 
     if (!data.celular.trim()) {
-        errors.push("El número de celular es obligatorio.");
-    } else if (!/^\d{7,15}$/.test(data.celular.trim().replace(/[\s\-+]/g, ""))) {
-        errors.push("El número de celular no es válido.");
+        errors.push("El celular es obligatorio.");
     }
 
-    if (!data.pregunta1.length)
-        errors.push("Seleccioná al menos una opción en la pregunta 1.");
+    if (!data.pregunta4) {
+        errors.push("Debes seleccionar la sucursal de alta.");
+    }
 
-    if (!data.pregunta2.length)
-        errors.push("Seleccioná al menos una opción en la pregunta 2.");
-
-    if (!data.pregunta3.length)
-        errors.push("Seleccioná al menos una opción en la pregunta 3.");
-
-    if (!data.pregunta4)
-        errors.push("Seleccioná una sucursal en la pregunta 4.");
+    if (!data.convenio || data.convenio.trim() === "") {
+        errors.push("Debes seleccionar a qué entidad pertenece el cliente.");
+    }
 
     return errors;
 }
@@ -101,12 +118,15 @@ form.addEventListener("submit", async function (e) {
         celular: document.getElementById("celular").value.trim(),
         fechaNac: document.getElementById("fechaNac").value.trim(),
         domicilio: document.getElementById("domicilio").value.trim(),
-        pregunta1: getChecked("p1"),
-        pregunta2: getChecked("p2"),
-        pregunta3: getChecked("p3"),
-        pregunta4: getRadio("p4"),          // radio → string único
+        
+        // Las preguntas 1, 2 y 3 no existen en este form. Las rellenamos estáticas:
+        pregunta1: [],
+        pregunta2: [],
+        pregunta3: [],
+        pregunta4: getRadio("p4"),
+        
         comentarios: document.getElementById("comentarios").value.trim(),
-        convenio: "NO PERTENEZCO A NINGUNO",
+        convenio: document.getElementById("convenio").value,
     };
 
     // Validación client-side
@@ -114,8 +134,8 @@ form.addEventListener("submit", async function (e) {
     if (errors.length) {
         showModal({
             type: "error",
-            title: "Revisá el formulario",
-            message: "Por favor corregí los siguientes errores antes de enviar:",
+            title: "Faltan datos",
+            message: "Por favor revisá los siguientes campos:",
             errors
         });
         return;
@@ -128,10 +148,10 @@ form.addEventListener("submit", async function (e) {
         celular: data.celular,
         fechaNac: data.fechaNac,
         domicilio: data.domicilio,
-        pregunta1: data.pregunta1.join(", "),
-        pregunta2: data.pregunta2.join(", "),
-        pregunta3: data.pregunta3.join(", "),
-        pregunta4: data.pregunta4,           // string, no necesita join
+        pregunta1: "ALTA POR CAJA - CONVENIO",
+        pregunta2: "OMITIDA",
+        pregunta3: "OMITIDA",
+        pregunta4: data.pregunta4,
         comentarios: data.comentarios,
         convenio: data.convenio,
     };
@@ -151,21 +171,21 @@ form.addEventListener("submit", async function (e) {
         if (result.success) {
             showModal({
                 type: "success",
-                title: "¡Registro exitoso!",
-                message: "¡Bienvenido/a a la comunidad Super Europa! Ya sos parte de nuestra familia de clientes.",
+                title: "¡Alta confirmada!",
+                message: "El cliente ha sido asociado al convenio correctamente.",
             });
             form.reset();
         } else if (result.errorType === "DUPLICATE_DNI") {
             showModal({
                 type: "error",
-                title: "¡Ya sos parte!",
-                message: "El DNI ingresado ya está registrado. ¡Ya sos parte de la comunidad Super Europa! 🎉",
+                title: "¡DNI Ya registrado!",
+                message: "Este DNI ya existe en la base de datos de Super Europa.",
             });
         } else {
             showModal({
                 type: "error",
                 title: "Error al registrar",
-                message: result.message || "Ocurrió un error inesperado. Intentá de nuevo en unos momentos.",
+                message: result.message || "Error al completar el registro.",
             });
         }
     } catch (err) {
@@ -173,7 +193,7 @@ form.addEventListener("submit", async function (e) {
         showModal({
             type: "error",
             title: "Error de conexión",
-            message: "No pudimos conectar con el servidor. Verificá tu conexión a internet e intentá de nuevo.",
+            message: "No se pudo conectar con los servidores.",
         });
     }
 });

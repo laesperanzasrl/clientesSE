@@ -1,0 +1,23 @@
+/* Custom tweaks for the Cashier Convenio Form */
+.highlight-field {
+    background: #fff8eb;
+    padding: 16px;
+    border-radius: var(--radius-sm);
+    border: 1px dashed var(--yellow-dk);
+    margin-top: 10px;
+}
+
+.highlight-field label {
+    color: var(--red-dark);
+    font-size: .95rem;
+}
+
+.highlight-field select {
+    border-color: var(--yellow-dk);
+    box-shadow: 0 4px 12px rgba(230, 188, 0, 0.15);
+}
+
+.highlight-field select:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 4px rgba(200, 16, 46, .08);
+}
